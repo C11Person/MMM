@@ -2,7 +2,7 @@ package org.appsys.pojo;
 
 import java.util.Date;
 
-public class Adpromotion {
+public class AdPromotion {
 	private int id;
 	private int appId;//
 	private String adPicPath;//广告图片存储路径

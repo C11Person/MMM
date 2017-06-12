@@ -3,7 +3,7 @@ package org.appsys.pojo;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class Appinfo {
+public class AppInfo {
 	private int id;
 	private String softwareName;//软件名称
 	private String APKName;//apk名称

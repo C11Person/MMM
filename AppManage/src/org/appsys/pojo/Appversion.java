@@ -3,7 +3,7 @@ package org.appsys.pojo;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class Appversion {
+public class AppVersion {
 	private int id;
 	private int appId;
 	private String versionNo;//版本号

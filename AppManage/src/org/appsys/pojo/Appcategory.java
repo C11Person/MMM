@@ -2,7 +2,7 @@ package org.appsys.pojo;
 
 import java.util.Date;
 
-public class Appcategory {
+public class AppCategory {
 	private int id;
 	private String categoryCode;//分类编码
 	private String categoryName;//分类名称

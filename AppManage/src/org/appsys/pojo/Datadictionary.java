@@ -2,7 +2,7 @@ package org.appsys.pojo;
 
 import java.util.Date;
 
-public class Datadictionary {
+public class DataDictionary {
 	private int id;
 	private String typeCode;//类型编码
 	private String typeName;//类型名称

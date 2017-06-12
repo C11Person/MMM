@@ -2,7 +2,7 @@ package org.appsys.pojo;
 
 import java.util.Date;
 
-public class Backenduser {
+public class BackendUser {
 	private int id;
 	private String userCode;//用户编码
 	private String userName;//用户名称

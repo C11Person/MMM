@@ -2,7 +2,7 @@ package org.appsys.pojo;
 
 import java.util.Date;
 
-public class Devuser {
+public class DevUser {
 	private int id;
 	private String devCode;//开发者账号
 	private String devName;//开发者名称

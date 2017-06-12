@@ -2,14 +2,14 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
 
 <!-- 设置首页 -->
-<welcome-file-list>
-    <welcome-file>/WEB-INF/jsp/login.jsp</welcome-file>
-</welcome-file-list>
+<!-- <welcome-file-list>
+    <welcome-file>/WEB-INF/jsp/devlogin.jsp</welcome-file>
+</welcome-file-list> -->
   
 <!-- 初始化参数，加载配置文件  spring+mybatis整合文件 -->  
  <context-param>
     <param-name>contextConfigLocation</param-name>
-    <param-value>classpath:applicationContext-*.xml</param-value>
+    <param-value>classpath:SpringConfig.xml</param-value>
   </context-param>
 
   <!-- 配置日志 -->

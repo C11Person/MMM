@@ -32,7 +32,7 @@
       <div class="login_wrapper">
         <div class="animate form login_form">
           <section class="login_content">
-            <form action="dologin" method="post">
+            <form action="${pageContext.request.contextPath }/dologin.html" method="post">
               <h1>APP开发者平台</h1>
               <div>
                 <input type="text" class="form-control" name="devCode" placeholder="请输入用户名" required="" />
@@ -40,7 +40,7 @@
               <div>
                 <input type="password" class="form-control" name="devPassword" placeholder="请输入密码" required="" />
               </div>
-              <span>${error }</span>
+              <span>${error}</span>
               <div>
               	<button type="submit" class="btn btn-success">登     录</button>
               	<button type="reset" class="btn btn-default">重　填</button>
