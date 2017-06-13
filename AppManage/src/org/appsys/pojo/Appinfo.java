@@ -26,7 +26,13 @@ public class AppInfo {
 	private int categoryLevel1;//所属一级分类
 	private int categoryLevel2;//所属二级分类
 	private String logoPicPath;//LOGO图片url路径
-	private String LocPath;//LOGO图片的服务器存储路径
+	private String logoLocPath;//LOGO图片的服务器存储路径
+	public String getLogoLocPath() {
+		return logoLocPath;
+	}
+	public void setLogoLocPath(String logoLocPath) {
+		this.logoLocPath = logoLocPath;
+	}
 	private int versionId;//最新的版本id
 	
 	private String flatformName;
@@ -205,12 +211,7 @@ public class AppInfo {
 	public void setLogoPicPath(String logoPicPath) {
 		this.logoPicPath = logoPicPath;
 	}
-	public String getLocPath() {
-		return LocPath;
-	}
-	public void setLocPath(String locPath) {
-		LocPath = locPath;
-	}
+
 	public int getVersionId() {
 		return versionId;
 	}

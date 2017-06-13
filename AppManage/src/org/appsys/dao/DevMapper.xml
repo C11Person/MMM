@@ -19,7 +19,7 @@
 		INNER JOIN app_category AS a1 ON a1.id =app_info.categoryLevel1
 		INNER JOIN app_category AS a2 ON a2.id =app_info.categoryLevel2
 		INNER JOIN app_category AS a3 ON a3.id =app_info.categoryLevel3
-		INNER JOIN app_version ON app_version.id = app_info.versionId
+		LEFT JOIN app_version ON app_version.id = app_info.versionId
  	
 		where	d1.typeName='所属平台' AND d2.typeName='APP状态'
 			
@@ -51,7 +51,7 @@
 		INNER JOIN app_category AS a1 ON a1.id =app_info.categoryLevel1
 		INNER JOIN app_category AS a2 ON a2.id =app_info.categoryLevel2
 		INNER JOIN app_category AS a3 ON a3.id =app_info.categoryLevel3
-		INNER JOIN app_version ON app_version.id = app_info.versionId
+		LEFT JOIN app_version ON app_version.id = app_info.versionId
  	
 		where	d1.typeName='所属平台' AND d2.typeName='APP状态'
 			
@@ -92,5 +92,16 @@
 	<select id="categoryLevel2List" resultType="AppCategory" >
 	  	SELECT id,categoryName,parentId FROM app_category WHERE parentId=#{id}
 	 </select>
+	 
+	<!-- 查询apk名是否存在 -->
+	<select id="selectDevByName" resultType="AppInfo">
+		SELECT 	id,APKName FROM app_info where APKName=#{APKName}
+	</select>
+	
+	<!-- 添加App -->
+	<insert id="addAppInfo" parameterType="AppInfo">
+		INSERT INTO app_info (softwareName,APKName,supportROM,interfaceLanguage,softwareSize,downloads,flatformId,categoryLevel1,categoryLevel2,categoryLevel3,appInfo,logoLocPath)
+		VALUES(#{softwareName},#{APKName},#{supportROM},#{interfaceLanguage},#{softwareSize},#{downloads},#{flatformId},#{categoryLevel1},#{categoryLevel2},#{categoryLevel3},#{appInfo},#{logoLocPath})
+	</insert>
 
 </mapper>

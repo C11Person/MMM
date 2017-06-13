@@ -69,6 +69,20 @@ public class DevUserServiceImpl implements DevUserService {
 			@Param("categoryLevel3") int categoryLevel3) {
 		return devMapper.selectAppCount(softwareName, STATUS, flatformId, categoryLevel1, categoryLevel2, categoryLevel3);
 	}
+	@Override
+	public AppInfo selectDevByName(@Param("APKName") String APKName) {
+		return devMapper.selectDevByName(APKName);
+	}
+	@Override
+	public boolean addAppInfo(AppInfo appInfo) {
+		int row = devMapper.addAppInfo(appInfo);
+		if(row==1){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
 
 
 

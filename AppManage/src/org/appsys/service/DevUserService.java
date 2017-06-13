@@ -52,4 +52,15 @@ public interface DevUserService {
 	 */
 	public List<AppCategory> categoryLevel2List(@Param("id") int id);
 	
+	/**
+	 * 查看apk名是否存在
+	 */
+	
+	public AppInfo selectDevByName(@Param("APKName") String APKName);
+	
+	/**
+	 * 添加App
+	 */
+	public boolean addAppInfo(AppInfo appInfo);
+	
 }
