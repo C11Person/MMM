@@ -11,4 +11,5 @@
 	  	SELECT id,categoryName,parentId FROM app_category WHERE parentId=#{id}
 	 </select>
 
+	 
 </mapper>

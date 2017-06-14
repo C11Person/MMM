@@ -83,5 +83,32 @@
 		INNER JOIN data_dictionary ON data_dictionary.valueId=app_info.status
 		WHERE typeName='APP状态' AND app_info.id=#{id}
 	</select>
-
+	
+	<!-- 修改App -->
+	<update id=updateAppInfo parameterType="AppInfo">
+		UPDATE app_info SET softwareName=#{},supportROM=#{},interfaceLanguage=#{},softwareSize=#{},downloads=#{},flatformId=#{},categoryLevel1=#{},categoryLevel2=#{},categoryLevel3=#{},appInfo=#{},logoPicPath=#{},logoLocPath=#{} where id = #{id}
+	</update>
+	
+	<!-- 删除App -->
+	<delete id="deleteAppInfo" parameterType="int">	
+	DELETE FROM app_info WHERE id =#{id}
+	</delete>
+	
+	
+	<!-- 查看详细信息 -->
+	<select id="getInfoById" resultType="AppInfo" >
+	SELECT app_info.id AS id,softwareName,supportROM,APKName,softwareSize,dict1.valueName AS flatformName,app1.categoryName AS categoryLevel1Name,
+		app2.categoryName AS categoryLevel2Name,app3.categoryName AS categoryLevel3Name,dict2.valueName AS statusName,downloads,
+		interfaceLanguage,appInfo,logoPicPath
+		FROM app_info
+		INNER JOIN data_dictionary AS dict1  ON dict1.valueId = app_info.flatformId AND dict1.typeCode='APP_FLATFORM'
+		INNER JOIN data_dictionary AS dict2 ON 	dict2.valueId  = app_info.status AND dict2.typeCode='APP_STATUS'
+		INNER JOIN data_dictionary AS dict3 ON 	dict3.valueId  = app_info.status AND dict3.typeCode='PUBLISH_STATUS'
+		INNER JOIN app_category AS app1 ON app_info.categoryLevel1 = app1.id
+		INNER JOIN app_category AS app2 ON app_info.categoryLevel2 = app2.id
+		INNER JOIN app_category AS app3 ON app_info.categoryLevel3 = app3.id
+		where app_info.id=#{id}
+	</select>
+	
+	
 </mapper>

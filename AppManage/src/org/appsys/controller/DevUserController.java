@@ -27,6 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -265,18 +266,23 @@ public class DevUserController {
 		session.setAttribute("appInfo", appInfo);
 		return "developer/appinfomodify";
 	}*/
-	@RequestMapping(value="/appinfomodify.html")
-	public String updateAppinfo(HttpSession session){
-
+	@RequestMapping(value="/appinfomodify")
+	public String updateAppinfo(Integer id,Model model,HttpSession session){
+		AppInfo appInfo = appInfoService.selectAppById(id);
+		session.setAttribute("appInfo", appInfo);
+		model.addAttribute("pid",id);
 		return "developer/appinfomodify";
 	}
 	
 	
 	@RequestMapping(value = "/categoryLevelAll", produces = "application/json;charset=utf-8")
 	@ResponseBody
-	public String categoryLevelAll() {
-		List<AppCategory> categoryLevel1List = appCategoryService.categoryLevel1List();
-		return JSONArray.toJSONString(categoryLevel1List);
+	public String categoryLevelAll(String pid){
+		if(pid==null || pid.equals("")){
+			pid="0";
+		}
+		List<AppCategory> categoryLevel2List = appCategoryService.categoryLevel2List(Integer.parseInt(pid));
+		return JSONArray.toJSONString(categoryLevel2List);
 	}
 	
 	

@@ -35,4 +35,9 @@ public interface AppInfoService {
 	 */
 	
 	public AppInfo selectAppById(@Param("id") int id);
+	
+	/**
+	 * 显示详细信息
+	 */
+	public AppInfo getInfoById(@Param("id") int id);
 }

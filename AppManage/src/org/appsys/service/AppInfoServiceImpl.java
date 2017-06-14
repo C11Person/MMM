@@ -77,4 +77,9 @@ public class AppInfoServiceImpl implements AppInfoService {
 		return appInfoMapper.selectAppById(id);
 	}
 
+	@Override
+	public AppInfo getInfoById(@Param("id") int id) {
+		return appInfoMapper.getInfoById(id);
+	}
+
 }
