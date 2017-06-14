@@ -258,4 +258,12 @@ public class DevUserController {
 	}
 	
 	
+	@RequestMapping(value = "/categoryLevelAll", produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public String categoryLevelAll() {
+		List<AppCategory> categoryLevel1List = devUserService.categoryLevel1List();
+		return JSONArray.toJSONString(categoryLevel1List);
+	}
+	
+	
 }
