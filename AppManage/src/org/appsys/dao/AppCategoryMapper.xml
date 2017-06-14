@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.appsys.dao.AppCategoryMapper">
+	<!-- 一级分类 -->
+	<select id="categoryLevel1List" resultType="AppCategory">
+		SELECT id,categoryName,parentId FROM app_category  WHERE parentId IS NULL
+	</select>
+	
+	<!-- 二三级分类 -->
+	<select id="categoryLevel2List" resultType="AppCategory" >
+	  	SELECT id,categoryName,parentId FROM app_category WHERE parentId=#{id}
+	 </select>
+
+</mapper>

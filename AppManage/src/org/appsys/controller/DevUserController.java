@@ -18,6 +18,9 @@ import org.appsys.pojo.AppCategory;
 import org.appsys.pojo.AppInfo;
 import org.appsys.pojo.DataDictionary;
 import org.appsys.pojo.DevUser;
+import org.appsys.service.AppCategoryService;
+import org.appsys.service.AppInfoService;
+import org.appsys.service.DataDictionaryService;
 import org.appsys.service.DevUserService;
 import org.appsys.tool.Constans;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +43,13 @@ public class DevUserController {
 	private Logger logger =Logger.getLogger("DevUserController.class");
 	@Autowired
 	DevUserService devUserService;
-
+	@Autowired
+	AppInfoService appInfoService;
+	@Autowired
+	DataDictionaryService dataDictionaryService;
+	@Autowired
+	AppCategoryService appCategoryService;
+	
 	@RequestMapping(value = "/login.html")
 	public String lo() {
 		return "devlogin";
@@ -101,7 +110,7 @@ public class DevUserController {
 			queryCategoryLevel3 = "0";
 		}
 
-		int count = devUserService.selectAppCount(querySoftwareName,
+		int count = appInfoService.selectAppCount(querySoftwareName,
 				Integer.parseInt(queryStatus),
 				Integer.parseInt(queryFlatformId),
 				Integer.parseInt(queryCategoryLevel1),
@@ -116,7 +125,7 @@ public class DevUserController {
 		map.put("currentPageNo", pageIndex);
 		session.setAttribute("pages", map);
 		// 显示所有
-		List<AppInfo> appInfoList = devUserService.appList(querySoftwareName,
+		List<AppInfo> appInfoList = appInfoService.appList(querySoftwareName,
 				Integer.parseInt(queryStatus),
 				Integer.parseInt(queryFlatformId),
 				Integer.parseInt(queryCategoryLevel1),
@@ -125,13 +134,13 @@ public class DevUserController {
 				Integer.parseInt(pageIndex), Constans.PAGE_SIZE);
 
 		// app状态
-		List<DataDictionary> statusList = devUserService.statusList();
+		List<DataDictionary> statusList = dataDictionaryService.statusList();
 
 		// 所属平台
-		List<DataDictionary> flatFormList = devUserService.flatFormList();
+		List<DataDictionary> flatFormList = dataDictionaryService.flatFormList();
 
 		// 一级分类
-		List<AppCategory> categoryLevel1List = devUserService
+		List<AppCategory> categoryLevel1List = appCategoryService
 				.categoryLevel1List();
 		session.setAttribute("appInfoList", appInfoList);
 		session.setAttribute("statusList", statusList);
@@ -143,7 +152,7 @@ public class DevUserController {
 	@RequestMapping(value = "/categorylevel2list", produces = "application/json;charset=utf-8")
 	@ResponseBody
 	public String li2(String pid) {
-		List<AppCategory> categoryLevel2List = devUserService.categoryLevel2List(Integer.parseInt(pid));
+		List<AppCategory> categoryLevel2List = appCategoryService.categoryLevel2List(Integer.parseInt(pid));
 		return JSONArray.toJSONString(categoryLevel2List);
 	}
 
@@ -156,21 +165,21 @@ public class DevUserController {
 	@RequestMapping(value = "/datadictionarylist", produces = "application/json;charset=utf-8")
 	@ResponseBody
 	public String datadictionarylist() {
-		List<DataDictionary> datadictionarylist = devUserService.flatFormList();
+		List<DataDictionary> datadictionarylist = dataDictionaryService.flatFormList();
 		return JSONArray.toJSONString(datadictionarylist);
 	}
 	
 	@RequestMapping(value = "/categoryLevel1List", produces = "application/json;charset=utf-8")
 	@ResponseBody
 	public String categoryLevel1List() {
-		List<AppCategory> categoryLevel1List = devUserService.categoryLevel1List();
+		List<AppCategory> categoryLevel1List = appCategoryService.categoryLevel1List();
 		return JSONArray.toJSONString(categoryLevel1List);
 	}
 	
 	@RequestMapping(value = "/apkexist", produces = "application/json;charset=utf-8")
 	@ResponseBody
 	public String selectDevByName(String APKName) {
-		AppInfo appInfo= devUserService.selectDevByName(APKName);
+		AppInfo appInfo= appInfoService.selectDevByName(APKName);
 		HashMap<String,String> resutlt = new HashMap<String, String>();
 		if(APKName.isEmpty()){
 			resutlt.put("APKName","empty");
@@ -237,7 +246,7 @@ public class DevUserController {
 		System.out.println("==========================================================="+hid_logoPicPath);*/
 		appInfo.setLogoPicPath(hid_logoPicPath);
 		appInfo.setLogoLocPath(logoLocPath);
-		boolean flag = devUserService.addAppInfo(appInfo);
+		boolean flag = appInfoService.addAppInfo(appInfo);
 		if(flag){
 			System.out.println("添加成功！");
 			return "redirect:/list.html";
@@ -249,11 +258,16 @@ public class DevUserController {
 	
 	
 	//修改
-	@RequestMapping(value="/appinfomodify/{appinfoid}")
-	public String updateAppinfo(@PathVariable int appinfoid,HttpSession session){
+/*	@RequestMapping(value="/appinfomodify.html")
+	public String updateAppinfo(@RequestParam int appinfoid,HttpSession session){
 		
 		AppInfo appInfo=devUserService.selectAppById(appinfoid);
 		session.setAttribute("appInfo", appInfo);
+		return "developer/appinfomodify";
+	}*/
+	@RequestMapping(value="/appinfomodify.html")
+	public String updateAppinfo(HttpSession session){
+
 		return "developer/appinfomodify";
 	}
 	
@@ -261,7 +275,7 @@ public class DevUserController {
 	@RequestMapping(value = "/categoryLevelAll", produces = "application/json;charset=utf-8")
 	@ResponseBody
 	public String categoryLevelAll() {
-		List<AppCategory> categoryLevel1List = devUserService.categoryLevel1List();
+		List<AppCategory> categoryLevel1List = appCategoryService.categoryLevel1List();
 		return JSONArray.toJSONString(categoryLevel1List);
 	}
 	
