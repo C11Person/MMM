@@ -3,21 +3,30 @@ package org.appsys.pojo;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class AppInfo {
 	private int id;
+	
+	@NotEmpty(message="软件名称不能为空")
 	private String softwareName;//软件名称
 	private String APKName;//apk名称
+	@NotEmpty(message="支持的ROM不能为空")
 	private String supportROM;//支持ROM
+	@NotEmpty(message="界面语言不能为空")
 	private String interfaceLanguage;//界面语言
+	@NotEmpty(message="软件大小不能为空")
 	private BigDecimal softwareSize;//软件大小
 	private Date updateDate;//更新日期
 	private int devId;//开发者ID
+	@NotEmpty(message="应用简介不能为空")
 	private String appInfo;//应用简介
 	private int status;//状态 1待审核 2审核通过 3 审核不通过 4 已上架 5 已下架 
 	private Date onSaleDate;//上架时间
 	private Date offSaleDate;//下架时间
 	private int flatformId;//所属平台
 	private int categoryLevel3;//所属三级分类
+	@NotEmpty(message="下载量不能为空")
 	private int downloads;//下载量
 	private int createdBy;
 	private Date creationDate;

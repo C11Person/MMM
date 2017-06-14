@@ -44,7 +44,7 @@
 	<!-- 配置 MultpartResolver -->
 	    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
    		 <!-- 上传文件大小上限，单位为字节 -->
-   		 <property name="maxUploadSize" value="51200"/>
+   		 <property name="maxUploadSize" value="512000"/>
    		 <!-- 请求的编码格式 -->
    		 <property name="defaultEncoding" value="UTF-8"/>
     </bean>

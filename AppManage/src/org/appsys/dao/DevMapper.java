@@ -52,6 +52,12 @@ public interface DevMapper {
 	public List<AppCategory> categoryLevel2List(@Param("id") int id);
 	
 	/**
+	 * 一二三
+	 */
+	public List<AppCategory> categoryLevelAll(@Param("id") int id);
+	
+	
+	/**
 	 * 查看apk名是否存在
 	 */
 	
@@ -61,4 +67,10 @@ public interface DevMapper {
 	 * 添加App
 	 */
 	public int addAppInfo(AppInfo appInfo);
+	
+	/**
+	 * 根据id查询
+	 */
+	
+	public AppInfo selectAppById(@Param("id") int id);
 }

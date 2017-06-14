@@ -82,6 +82,14 @@ public class DevUserServiceImpl implements DevUserService {
 			return false;
 		}
 	}
+	@Override
+	public AppInfo selectAppById(@Param("id") int id) {
+		return devMapper.selectAppById(id);
+	}
+	@Override
+	public List<AppCategory> categoryLevelAll(@Param("id") int id) {
+		return devMapper.categoryLevelAll(id);
+	}
 
 
 

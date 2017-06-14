@@ -1,12 +1,14 @@
 package org.appsys.controller;
 
 import java.io.File;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.math.RandomUtils;
@@ -22,6 +24,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -51,10 +55,10 @@ public class DevUserController {
 		 */
 		DevUser devUser = devUserService.selectUserByNameAndPwd(devCode,
 				devPassword);
-		if (devUser != null) {
+		if(devUser != null){
 			session.setAttribute("devUserSession", devUser);
 			return "developer/main";
-		} else {
+		}else{
 			session.setAttribute("error", "用户名或密码错误");
 			return "devlogin";
 		}
@@ -76,6 +80,8 @@ public class DevUserController {
 			@RequestParam(required = false) String queryCategoryLevel2,
 			@RequestParam(required = false) String queryCategoryLevel3,
 			@RequestParam(required = false) String pageIndex) {
+		
+		
 		if (pageIndex == null) {
 			pageIndex = "1";
 		}
@@ -180,16 +186,22 @@ public class DevUserController {
 	
 	//添加
 	@RequestMapping(value="/appinfoaddsave.html",method=RequestMethod.POST)
-	public String useradd(AppInfo appInfo,HttpSession session,HttpServletRequest request,
+	public String useradd( AppInfo appInfo,HttpSession session,HttpServletRequest request,
 			 @RequestParam(value ="a_logoPicPath", required = false) MultipartFile attach){
-		
+		String hid_logoPicPath = request.getParameter("hid_logoPicPath");
+		System.out.println(hid_logoPicPath);
+/*			@Valid
+ * 			BindingResult bindingResult
+ * 			if(bindingResult.hasErrors()){  
+			return "developer/appinfoadd";			
+		}*/
 		String logoLocPath = null;
 		//判断文件是否为空
 		if(!attach.isEmpty()){
 			String path = request.getSession().getServletContext().getRealPath("statics"+File.separator+"uploadfiles");			
 			String oldFileName = attach.getOriginalFilename();//原文件名		
 			String prefix=FilenameUtils.getExtension(oldFileName);//原文件后缀   
-			int filesize = 51200;
+			int filesize = 512000;
 			
 	        if(attach.getSize() >  filesize){//上传大小不得超过 500k
            	request.setAttribute("uploadFileError", " * 上传大小不得超过 500k");
@@ -216,15 +228,33 @@ public class DevUserController {
            	return "developer/appinfoadd";
            }
 		}
+		int devId=((DevUser)session.getAttribute("devUserSession")).getId();
+		appInfo.setDevId(devId);
+		appInfo.setCreatedBy(devId);
+		appInfo.setCreationDate(new Date());
+		appInfo.setStatus(1);
+/*		hid_logoPicPath=request.getParameter("hid_logoPicPath");
+		System.out.println("==========================================================="+hid_logoPicPath);*/
+		appInfo.setLogoPicPath(hid_logoPicPath);
 		appInfo.setLogoLocPath(logoLocPath);
 		boolean flag = devUserService.addAppInfo(appInfo);
 		if(flag){
 			System.out.println("添加成功！");
-			return "developer/appinfolist";
+			return "redirect:/list.html";
 		}else{
 			System.out.println("添加失败！");
 			return "false";
 		}
+	}
+	
+	
+	//修改
+	@RequestMapping(value="/appinfomodify/{appinfoid}")
+	public String updateAppinfo(@PathVariable int appinfoid,HttpSession session){
+		
+		AppInfo appInfo=devUserService.selectAppById(appinfoid);
+		session.setAttribute("appInfo", appInfo);
+		return "developer/appinfomodify";
 	}
 	
 	
