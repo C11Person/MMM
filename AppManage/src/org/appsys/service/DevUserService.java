@@ -1,11 +1,7 @@
 package org.appsys.service;
 
-import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
-import org.appsys.pojo.AppCategory;
-import org.appsys.pojo.AppInfo;
-import org.appsys.pojo.DataDictionary;
 import org.appsys.pojo.DevUser;
 
 public interface DevUserService {

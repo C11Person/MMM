@@ -40,7 +40,7 @@ public interface AppInfoMapper {
 	 * 删除App
 	 */
 	
-	public int deleteAppInfo (AppInfo appInfo);
+	public int deleteAppInfo (@Param("id") int id);
 	
 	
 	/**

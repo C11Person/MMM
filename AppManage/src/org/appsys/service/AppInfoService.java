@@ -40,7 +40,7 @@ public interface AppInfoService {
 	 * 删除App
 	 */
 	
-	public boolean deleteAppInfo (AppInfo appInfo);
+	public boolean deleteAppInfo (@Param("id") int id);
 	
 	/**
 	 * 根据id查询

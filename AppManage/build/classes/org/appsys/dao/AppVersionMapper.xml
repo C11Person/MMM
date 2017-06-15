@@ -11,5 +11,20 @@
 	WHERE app_version.id=(SELECT versionId FROM app_info WHERE app_info.id=#{id})  
 	</select>
 
+	<insert id="addVersion" parameterType="AppVersion">
+	INSERT INTO .app_version (appId,versionNo,
+	versionInfo,publishStatus ,downloadLink,versionSize,
+	createdBy,creationDate,modifyBy,modifyDate,apkLocPath,apkFileName )
+	VALUES(#{appId},#{versionNo},#{versionInfo},#{publishStatus},
+	#{downloadLink},
+	#{versionSize},
+	#{createdBy},	
+	#{creationDate},
+	#{modifyBy},	
+	#{modifyDate},
+	#{apkLocPath},
+	#{apkFileName})
+	</insert>
+	
 
 </mapper>

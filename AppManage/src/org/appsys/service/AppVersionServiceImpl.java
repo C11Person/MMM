@@ -27,5 +27,14 @@ public class AppVersionServiceImpl implements AppVersionService {
 		// TODO Auto-generated method stub
 		return appVersionMapper.getAppVersionById(id);
 	}
+	@Override
+	public boolean addVersion(AppVersion appVersion) {
+		int row = appVersionMapper.addVersion(appVersion);
+		if(row==1){
+			return true;
+		}else{
+			return false;
+		}
+	}
 
 }

@@ -183,7 +183,7 @@ $(".deleteApp").on("click",function(){
 	if(confirm("你确定要删除APP应用【"+obj.attr("appsoftwarename")+"】及其所有的版本吗？")){
 		$.ajax({
 			type:"GET",
-			url:"delapp.json",
+			url:"delapp",
 			data:{id:obj.attr("appinfoid")},
 			dataType:"json",
 			success:function(data){

@@ -93,8 +93,8 @@ public class AppInfoServiceImpl implements AppInfoService {
 	}
 
 	@Override
-	public boolean deleteAppInfo(AppInfo appInfo) {
-		int row = appInfoMapper.deleteAppInfo(appInfo);
+	public boolean deleteAppInfo(@Param("id") int id) {
+		int row = appInfoMapper.deleteAppInfo(id);
 		if(row==1){
 			return true;
 		}else{

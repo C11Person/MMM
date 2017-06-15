@@ -14,12 +14,15 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.math.RandomUtils;
 import org.apache.ibatis.annotations.Param;
 import org.apache.log4j.Logger;
+import org.appsys.dao.AppVersionMapper;
 import org.appsys.pojo.AppCategory;
 import org.appsys.pojo.AppInfo;
+import org.appsys.pojo.AppVersion;
 import org.appsys.pojo.DataDictionary;
 import org.appsys.pojo.DevUser;
 import org.appsys.service.AppCategoryService;
 import org.appsys.service.AppInfoService;
+import org.appsys.service.AppVersionService;
 import org.appsys.service.DataDictionaryService;
 import org.appsys.service.DevUserService;
 import org.appsys.tool.Constans;
@@ -50,6 +53,8 @@ public class DevUserController {
 	DataDictionaryService dataDictionaryService;
 	@Autowired
 	AppCategoryService appCategoryService;
+	@Autowired
+	AppVersionService appVersionService;
 	
 	//跳转到登陆界面
 	@RequestMapping(value = "/login.html")
@@ -334,4 +339,40 @@ public class DevUserController {
 			return "false";
 		}
 	}
+
+	//显示view
+	@RequestMapping(value="/appview/{appinfoid}")
+	public String appView(@PathVariable int appinfoid,HttpSession session){
+		AppInfo appInfo=appInfoService.getInfoById(appinfoid);
+		List<AppVersion> appVersionList = appVersionService.getAppVersionById(appinfoid);
+		session.setAttribute("appInfo", appInfo);
+		session.setAttribute("appVersionList", appVersionList);
+		return "developer/appinfoview";
+	}
+	
+	//删除App
+	@RequestMapping(value="/delapp",produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public Object deleteApp(int id){
+		HashMap<String,String> resutlt = new HashMap<String, String>();
+		AppInfo  appInfo= appInfoService.selectAppById(id);
+		if(appInfo==null){
+			resutlt.put("delResult","notexist");
+		}
+		boolean flag=appInfoService.deleteAppInfo(id);
+		if(flag){
+			resutlt.put("delResult","true");
+		}else{
+			resutlt.put("delResult","false");
+		}
+		
+		return JSONArray.toJSONString(resutlt);
+	}
+
+	//跳转到新增版本页面
+	@RequestMapping(value="/appversionadd")
+	public String appversionadd(int id,HttpSession session){
+		return "developer/appversionadd";
+	}
+
 }
