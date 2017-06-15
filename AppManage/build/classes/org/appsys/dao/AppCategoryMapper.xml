@@ -3,7 +3,7 @@
 <mapper namespace="org.appsys.dao.AppCategoryMapper">
 	<!-- 一级分类 -->
 	<select id="categoryLevel1List" resultType="AppCategory">
-		SELECT id,categoryName,parentId FROM app_category  WHERE parentId IS NULL
+		SELECT id,categoryName,parentId FROM app_category  WHERE parentId = '0'
 	</select>
 	
 	<!-- 二三级分类 -->

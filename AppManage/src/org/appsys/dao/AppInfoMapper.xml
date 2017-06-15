@@ -79,25 +79,25 @@
 	
 	<!-- 根据id查询 -->
 	<select id="selectAppById" resultType="AppInfo">
-		SELECT 	app_info.id,softwareName,APKName,supportROM,interfaceLanguage,softwareSize,downloads,categoryLevel1,categoryLevel2,categoryLevel3,valueName AS statusName,appInfo,logoPicPath,logoLocPath FROM app_info
+		SELECT 	app_info.id,softwareName,APKName,supportROM,interfaceLanguage,softwareSize,downloads,categoryLevel1,categoryLevel2,categoryLevel3,flatformId,valueName AS statusName,appInfo,logoPicPath,logoLocPath FROM app_info
 		INNER JOIN data_dictionary ON data_dictionary.valueId=app_info.status
 		WHERE typeName='APP状态' AND app_info.id=#{id}
 	</select>
 	
 	<!-- 修改App -->
-	<update id=updateAppInfo parameterType="AppInfo">
-		UPDATE app_info SET softwareName=#{},supportROM=#{},interfaceLanguage=#{},softwareSize=#{},downloads=#{},flatformId=#{},categoryLevel1=#{},categoryLevel2=#{},categoryLevel3=#{},appInfo=#{},logoPicPath=#{},logoLocPath=#{} where id = #{id}
+	<update id="updateAppInfo">
+		UPDATE app_info SET softwareName=#{softwareName},supportROM=#{supportROM},interfaceLanguage=#{interfaceLanguage},softwareSize=#{softwareSize},downloads=#{downloads},flatformId=#{flatformId},categoryLevel1=#{categoryLevel1},categoryLevel2=#{categoryLevel2},categoryLevel3=#{categoryLevel3},appInfo=#{appInfo},modifyBy=#{modifyBy},modifyDate=#{modifyDate},logoPicPath=#{logoPicPath},logoLocPath=#{logoLocPath} where id = #{id}
 	</update>
 	
 	<!-- 删除App -->
-	<delete id="deleteAppInfo" parameterType="int">	
+	<delete id="deleteAppInfo">	
 	DELETE FROM app_info WHERE id =#{id}
 	</delete>
 	
 	
 	<!-- 查看详细信息 -->
 	<select id="getInfoById" resultType="AppInfo" >
-	SELECT app_info.id AS id,softwareName,supportROM,APKName,softwareSize,dict1.valueName AS flatformName,app1.categoryName AS categoryLevel1Name,
+ 	SELECT app_info.id AS id,softwareName,supportROM,APKName,softwareSize,dict1.valueName AS flatformName,app1.categoryName AS categoryLevel1Name,
 		app2.categoryName AS categoryLevel2Name,app3.categoryName AS categoryLevel3Name,dict2.valueName AS statusName,downloads,
 		interfaceLanguage,appInfo,logoPicPath
 		FROM app_info

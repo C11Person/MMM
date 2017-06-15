@@ -31,6 +31,18 @@ public interface AppInfoService {
 	public boolean addAppInfo(AppInfo appInfo);
 	
 	/**
+	 * 修改App
+	 */
+	public boolean updateAppInfo(AppInfo appInfo);
+	
+	
+	/**
+	 * 删除App
+	 */
+	
+	public boolean deleteAppInfo (AppInfo appInfo);
+	
+	/**
 	 * 根据id查询
 	 */
 	

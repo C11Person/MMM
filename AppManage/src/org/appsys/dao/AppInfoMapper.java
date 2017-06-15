@@ -31,6 +31,19 @@ public interface AppInfoMapper {
 	public int addAppInfo(AppInfo appInfo);
 	
 	/**
+	 * 修改App
+	 */
+	public int updateAppInfo(AppInfo appInfo);
+	
+	
+	/**
+	 * 删除App
+	 */
+	
+	public int deleteAppInfo (AppInfo appInfo);
+	
+	
+	/**
 	 * 根据id查询
 	 */
 	

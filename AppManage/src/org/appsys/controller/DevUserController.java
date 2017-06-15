@@ -51,11 +51,13 @@ public class DevUserController {
 	@Autowired
 	AppCategoryService appCategoryService;
 	
+	//跳转到登陆界面
 	@RequestMapping(value = "/login.html")
 	public String lo() {
 		return "devlogin";
 	}
-
+	
+	//登陆
 	@RequestMapping(value = "/dologin.html", method = RequestMethod.POST)
 	public String login(String devCode, String devPassword, HttpSession session) {
 		/*
@@ -73,7 +75,8 @@ public class DevUserController {
 			return "devlogin";
 		}
 	}
-
+	
+	//注销
 	@RequestMapping(value = "/dev/logout.html")
 	public String loginout(HttpSession session) {
 		session.invalidate();
@@ -150,19 +153,13 @@ public class DevUserController {
 		return "developer/appinfolist";
 	}
 
-	@RequestMapping(value = "/categorylevel2list", produces = "application/json;charset=utf-8")
-	@ResponseBody
-	public String li2(String pid) {
-		List<AppCategory> categoryLevel2List = appCategoryService.categoryLevel2List(Integer.parseInt(pid));
-		return JSONArray.toJSONString(categoryLevel2List);
-	}
-
+	//跳转到添加App页面
 	@RequestMapping(value = "/appinfoadd.html")
 	public String appinfoadd(){
 		return "developer/appinfoadd";
 	}
 	
-	
+	//所属平台
 	@RequestMapping(value = "/datadictionarylist", produces = "application/json;charset=utf-8")
 	@ResponseBody
 	public String datadictionarylist() {
@@ -170,6 +167,7 @@ public class DevUserController {
 		return JSONArray.toJSONString(datadictionarylist);
 	}
 	
+	//一级分类
 	@RequestMapping(value = "/categoryLevel1List", produces = "application/json;charset=utf-8")
 	@ResponseBody
 	public String categoryLevel1List() {
@@ -177,6 +175,7 @@ public class DevUserController {
 		return JSONArray.toJSONString(categoryLevel1List);
 	}
 	
+	//判断apk名称是否存在
 	@RequestMapping(value = "/apkexist", produces = "application/json;charset=utf-8")
 	@ResponseBody
 	public String selectDevByName(String APKName) {
@@ -200,11 +199,6 @@ public class DevUserController {
 			 @RequestParam(value ="a_logoPicPath", required = false) MultipartFile attach){
 		String hid_logoPicPath = request.getParameter("hid_logoPicPath");
 		System.out.println(hid_logoPicPath);
-/*			@Valid
- * 			BindingResult bindingResult
- * 			if(bindingResult.hasErrors()){  
-			return "developer/appinfoadd";			
-		}*/
 		String logoLocPath = null;
 		//判断文件是否为空
 		if(!attach.isEmpty()){
@@ -243,8 +237,6 @@ public class DevUserController {
 		appInfo.setCreatedBy(devId);
 		appInfo.setCreationDate(new Date());
 		appInfo.setStatus(1);
-/*		hid_logoPicPath=request.getParameter("hid_logoPicPath");
-		System.out.println("==========================================================="+hid_logoPicPath);*/
 		appInfo.setLogoPicPath(hid_logoPicPath);
 		appInfo.setLogoLocPath(logoLocPath);
 		boolean flag = appInfoService.addAppInfo(appInfo);
@@ -259,13 +251,6 @@ public class DevUserController {
 	
 	
 	//修改
-/*	@RequestMapping(value="/appinfomodify.html")
-	public String updateAppinfo(@RequestParam int appinfoid,HttpSession session){
-		
-		AppInfo appInfo=devUserService.selectAppById(appinfoid);
-		session.setAttribute("appInfo", appInfo);
-		return "developer/appinfomodify";
-	}*/
 	@RequestMapping(value="/appinfomodify")
 	public String updateAppinfo(Integer id,Model model,HttpSession session){
 		AppInfo appInfo = appInfoService.selectAppById(id);
@@ -274,7 +259,7 @@ public class DevUserController {
 		return "developer/appinfomodify";
 	}
 	
-	
+	//一二三级分类
 	@RequestMapping(value = "/categoryLevelAll", produces = "application/json;charset=utf-8")
 	@ResponseBody
 	public String categoryLevelAll(String pid){
@@ -285,5 +270,68 @@ public class DevUserController {
 		return JSONArray.toJSONString(categoryLevel2List);
 	}
 	
+	//修改界面删除图片
+	@RequestMapping(value="/delfile",produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public Object deletephoto(){
+		HashMap<String,String> resutlt = new HashMap<String, String>();
+		resutlt.put("result","success");
+		return JSONArray.toJSONString(resutlt);
+	}
 	
+	
+	//修改App信息
+	@RequestMapping(value="/appinfomodifysave",method=RequestMethod.POST)
+	public String updateApp(AppInfo appInfo,HttpSession session,HttpServletRequest request,
+			 @RequestParam(value ="attach", required = false) MultipartFile attach){
+		String hid_logoPicPath = request.getParameter("hid_logoPicPath");
+		System.out.println(hid_logoPicPath);
+		String logoLocPath = null;
+		//判断文件是否为空
+		if(!attach.isEmpty()){
+			String path = request.getSession().getServletContext().getRealPath("statics"+File.separator+"uploadfiles");			
+			String oldFileName = attach.getOriginalFilename();//原文件名		
+			String prefix=FilenameUtils.getExtension(oldFileName);//原文件后缀   
+			int filesize = 512000;
+			
+	        if(attach.getSize() >  filesize){//上传大小不得超过 500k
+           	request.setAttribute("uploadFileError", " * 上传大小不得超过 500k");
+	        	return "useradd";
+           }else if(prefix.equalsIgnoreCase("jpg") || prefix.equalsIgnoreCase("png") 
+           		|| prefix.equalsIgnoreCase("jpeg") || prefix.equalsIgnoreCase("pneg")){//上传图片格式不正确
+           	String fileName = System.currentTimeMillis()+RandomUtils.nextInt(1000000)+"_Personal.jpg";  
+               logger.debug("new fileName======== " + attach.getName());
+               File targetFile = new File(path, fileName);  
+               if(!targetFile.exists()){  
+                   targetFile.mkdirs();  
+               }  
+               //保存  
+               try {  
+               	attach.transferTo(targetFile);  
+               } catch (Exception e) {  
+                   e.printStackTrace();  
+                   request.setAttribute("uploadFileError", " * 上传失败！");
+                   return "developer/appinfomodify";
+               }  
+               logoLocPath = path+File.separator+fileName;
+           }else{
+           	request.setAttribute("uploadFileError", " * 上传图片格式不正确");
+           	return "developer/appinfomodify";
+           }
+		}
+		int devId=((DevUser)session.getAttribute("devUserSession")).getId();
+		appInfo.setDevId(devId);
+		appInfo.setModifyBy(devId);
+		appInfo.setModifyDate(new Date());
+		appInfo.setLogoPicPath(hid_logoPicPath);
+		appInfo.setLogoLocPath(logoLocPath);
+		boolean flag = appInfoService.updateAppInfo(appInfo);
+		if(flag){
+			logger.info("修改成功");
+			return "redirect:/list.html";
+		}else{
+			logger.info("修改失败");
+			return "false";
+		}
+	}
 }

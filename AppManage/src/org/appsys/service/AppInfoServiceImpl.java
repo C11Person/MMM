@@ -82,4 +82,24 @@ public class AppInfoServiceImpl implements AppInfoService {
 		return appInfoMapper.getInfoById(id);
 	}
 
+	@Override
+	public boolean updateAppInfo(AppInfo appInfo) {
+		int row = appInfoMapper.updateAppInfo(appInfo);
+		if(row==1){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+	@Override
+	public boolean deleteAppInfo(AppInfo appInfo) {
+		int row = appInfoMapper.deleteAppInfo(appInfo);
+		if(row==1){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
 }
