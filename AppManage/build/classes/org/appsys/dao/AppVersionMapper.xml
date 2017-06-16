@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?> 
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.appsys.dao.AppVersionMapper">
-	<select id="getAppVersionById" resultType="AppVersion" >
-	SELECT app_version.id,appId,versionNo,versionInfo,publishStatus,downloadLink
-	,versionSize,app_version.createdBy AS createdBy,app_version.creationDate AS creationDate
-	,app_version.modifyBy AS modifyBy,app_version.modifyDate AS modifyDate,apkLocPath,apkFileName,softwareName AS appName
-	FROM app_version
-	INNER JOIN app_info ON app_info.versionId = app_version.id
-	INNER JOIN data_dictionary AS d1 ON  d1.id =app_info.status
-	WHERE app_version.id=(SELECT versionId FROM app_info WHERE app_info.id=#{id})  
+	<select id="getappVersionById" resultType="AppVersion">
+		SELECT app_info.id as AppinfoId,softwareName as appName,versionNo,publishStatus,versionSize,
+		valueName as publishStatusName,downloadLink,apkFileName,app_version.modifyDate as modifyDate FROM 
+		app_version INNER JOIN app_info ON app_info.id = app_version.appId
+		INNER JOIN data_dictionary ON app_version.publishStatus = data_dictionary.valueId 
+		WHERE typeName='发布状态' and app_info.id=#{id}
 	</select>
 
 	<insert id="addVersion" parameterType="AppVersion">
@@ -26,5 +24,24 @@
 	#{apkFileName})
 	</insert>
 	
+	
+	<select id="addVerId" resultType="int">
+		SELECT LAST_INSERT_ID()
+	</select>
+	
+	<select id="selectVerById" resultType="AppVersion">
+		SELECT id,appId,versionNo,versionSize,downloadLink,apkLocPath,apkFileName FROM app_version
+		where id=#{id} and appId=#{appId}
+	</select>
+	
 
+	
+	<!-- 修改版本 -->
+	<update id="updateVersion" parameterType="AppVersion">
+			UPDATE app_version versionSize=#{versionSize},versionInfo = #{versionInfo},apkLocPath=#{apkLocPath},downloadLink = #{downloadLink} ,apkFileName=#{apkFileName},modifyBy=#{modifyBy},modifyDate=#{modifyDate}
+			where id=#{id}
+	</update>
+	
+	
+	
 </mapper>

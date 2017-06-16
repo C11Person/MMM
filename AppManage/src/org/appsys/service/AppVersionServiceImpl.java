@@ -18,15 +18,11 @@ import org.springframework.stereotype.Service;
 @Service("appVersionService")
 public class AppVersionServiceImpl implements AppVersionService {
 	@Autowired
-	AppVersionMapper appVersionMapper;
+	private AppVersionMapper appVersionMapper;
 	/* (non-Javadoc)
 	 * @see org.appsys.service.AppVersionService#getAppVersionById(int)
 	 */
-	@Override
-	public List<AppVersion> getAppVersionById(@Param("id") int id) {
-		// TODO Auto-generated method stub
-		return appVersionMapper.getAppVersionById(id);
-	}
+
 	@Override
 	public boolean addVersion(AppVersion appVersion) {
 		int row = appVersionMapper.addVersion(appVersion);
@@ -35,6 +31,31 @@ public class AppVersionServiceImpl implements AppVersionService {
 		}else{
 			return false;
 		}
+	}
+	public void setAppVersionMapper(AppVersionMapper appVersionMapper) {
+		this.appVersionMapper = appVersionMapper;
+	}
+	@Override
+	public int addVerId() {
+		return appVersionMapper.addVerId();
+	}
+	@Override
+	public boolean  updateVersion(AppVersion appVersion) {
+		int row = appVersionMapper.updateVersion(appVersion);
+		if(row==1){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	@Override
+	public List<AppVersion> getappVersionById(@Param("id")int id) {
+		return appVersionMapper.getappVersionById(id);
+	}
+	@Override
+	public AppVersion selectVerById(@Param("id") int id,
+			@Param("appId") int appId) {
+		return appVersionMapper.selectVerById(id, appId);
 	}
 
 }

@@ -12,10 +12,24 @@ public interface AppVersionService {
 	 * @param id
 	 * @return
 	 */
-	public List<AppVersion> getAppVersionById(@Param("id") int id);
+	public List<AppVersion> getappVersionById(@Param("id")int id);
 	
 	/**
 	 * 添加版本
 	 */
 	public boolean addVersion(AppVersion appVersion);
+	
+	/**
+	 * 获取上次添加的id
+	 */
+	public int addVerId();
+	/**
+	 * 修改版本信息
+	 */
+	public boolean  updateVersion(AppVersion appVersion);
+	
+	/**
+	 * id查询最新版本
+	 */
+	public  AppVersion selectVerById(@Param("id")int id,@Param("appId")int appId);
 }

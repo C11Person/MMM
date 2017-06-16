@@ -54,4 +54,10 @@ public interface AppInfoMapper {
 	 * 显示详细信息
 	 */
 	public AppInfo getInfoById(@Param("id") int id);
+	
+	/**
+	 * 修改版本id
+	 */
+	
+	public int upAppInfo(@Param("versionId") int versionId,@Param("id") int id);
 }

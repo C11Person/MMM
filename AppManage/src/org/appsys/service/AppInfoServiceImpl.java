@@ -102,4 +102,10 @@ public class AppInfoServiceImpl implements AppInfoService {
 		}
 	}
 
+	@Override
+	public int upAppInfo(@Param("versionId") int versionId, @Param("id") int id) {
+		return appInfoMapper.upAppInfo(versionId, id);
+	}
+
+
 }

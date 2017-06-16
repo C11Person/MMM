@@ -20,6 +20,13 @@ public class AppVersion {
 	
 	private String appName;
 	private String publishStatusName;
+	private String APKName;
+	public String getAPKName() {
+		return APKName;
+	}
+	public void setAPKName(String aPKName) {
+		APKName = aPKName;
+	}
 	public String getAppName() {
 		return appName;
 	}

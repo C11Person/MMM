@@ -111,4 +111,10 @@
 	</select>
 	
 	
+	
+	<!-- 	修改版本id -->
+	<update id="upAppInfo">
+		UPDATE app_info SET versionId = #{versionId} WHERE id = #{id}
+	</update>
+	
 </mapper>

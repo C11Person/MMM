@@ -124,13 +124,21 @@
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
             <input type="file" class="form-control col-md-7 col-xs-12" name="a_downloadLink" id="a_downloadLink"  required="required"/>
+            <input type="hidden" id="hid_downloadLink" name="hid_downloadLink">
             ${fileUploadError }
             </div>
           </div>
           <div class="ln_solid"></div>
           <div class="form-group">
             <div class="col-md-6 col-md-offset-3">
-              <button id="send" type="submit" class="btn btn-success">保存</button>
+              <button id="send" type="submit" class="btn btn-success" onclick="a()">保存</button>
+                <script type="text/javascript">
+              
+              	function a(){
+              		 document.getElementById("hid_downloadLink").value  = document.getElementById("a_downloadLink").value;
+              		 return true;
+              	}
+              </script>
               <button type="button" class="btn btn-primary" id="back">返回</button>
             </div>
           </div>
