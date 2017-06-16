@@ -30,7 +30,7 @@
 	</select>
 	
 	<select id="selectVerById" resultType="AppVersion">
-		SELECT id,appId,versionNo,versionSize,downloadLink,apkLocPath,apkFileName FROM app_version
+		SELECT id,appId,versionInfo,versionNo,versionSize,downloadLink,apkLocPath,apkFileName FROM app_version
 		where id=#{id} and appId=#{appId}
 	</select>
 	
@@ -38,8 +38,8 @@
 	
 	<!-- 修改版本 -->
 	<update id="updateVersion" parameterType="AppVersion">
-			UPDATE app_version versionSize=#{versionSize},versionInfo = #{versionInfo},apkLocPath=#{apkLocPath},downloadLink = #{downloadLink} ,apkFileName=#{apkFileName},modifyBy=#{modifyBy},modifyDate=#{modifyDate}
-			where id=#{id}
+		UPDATE app_version SET  versionSize =#{versionSize},versionInfo =#{versionInfo},downloadLink =#{downloadLink},modifyBy =#{modifyBy},modifyDate =#{modifyDate},apkLocPath =#{apkLocPath},apkFileName =#{apkFileName}
+		WHERE id = #{id} 
 	</update>
 	
 	

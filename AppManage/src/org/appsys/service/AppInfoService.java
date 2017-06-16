@@ -1,5 +1,6 @@
 package org.appsys.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -59,4 +60,32 @@ public interface AppInfoService {
 	 */
 	
 	public int upAppInfo(@Param("versionId") int versionId,@Param("id") int id);
+	
+	/**
+	 * 上架
+	 * @return
+	 */
+	public int appOnSale(@Param("status") int status,@Param("onSaleDate") Date onSaleDate,@Param("id") int id);
+	
+	
+	/**
+	 * 下架
+	 */
+	public int appOffSale(@Param("status") int status,@Param("offSaleDate") Date offSaleDate,@Param("id") int id);
+	
+	/**
+	 * 后台管理列表
+	 */
+	public List<AppInfo> backendList(@Param("softwareName") String softwareName,@Param("STATUS") int STATUS,@Param("flatformId") int flatformId,@Param("categoryLevel1") int categoryLevel1,@Param("categoryLevel2") int categoryLevel2,@Param("categoryLevel3") int categoryLevel3,@Param("index") int index,@Param("pageSize") int pageSize);
+	
+	/**
+	 * 后台列表总记录数
+	 */
+	
+	public int selectBackendCount(@Param("softwareName") String softwareName,@Param("STATUS") int STATUS,@Param("flatformId") int flatformId,@Param("categoryLevel1") int categoryLevel1,@Param("categoryLevel2") int categoryLevel2,@Param("categoryLevel3") int categoryLevel3);
+	
+	/**
+	 * 审核
+	 */
+	public boolean  updateStatus(@Param("status") int status,@Param("id") int id);
 }

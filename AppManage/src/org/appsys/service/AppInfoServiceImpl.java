@@ -3,6 +3,7 @@
  */
 package org.appsys.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -105,6 +106,50 @@ public class AppInfoServiceImpl implements AppInfoService {
 	@Override
 	public int upAppInfo(@Param("versionId") int versionId, @Param("id") int id) {
 		return appInfoMapper.upAppInfo(versionId, id);
+	}
+
+	@Override
+	public int appOnSale(@Param("status") int status,
+			@Param("onSaleDate") Date onSaleDate, @Param("id") int id) {
+		return  appInfoMapper.appOnSale(status, onSaleDate, id);
+
+	}
+
+	@Override
+	public int appOffSale(@Param("status") int status,
+			@Param("offSaleDate") Date offSaleDate, @Param("id") int id) {
+		return  appInfoMapper.appOffSale(status, offSaleDate, id);
+
+	}
+
+	@Override
+	public List<AppInfo> backendList(
+			@Param("softwareName") String softwareName,
+			@Param("STATUS") int STATUS, @Param("flatformId") int flatformId,
+			@Param("categoryLevel1") int categoryLevel1,
+			@Param("categoryLevel2") int categoryLevel2,
+			@Param("categoryLevel3") int categoryLevel3,
+			@Param("index") int index, @Param("pageSize") int pageSize) {
+		return appInfoMapper.backendList(softwareName, STATUS, flatformId, categoryLevel1, categoryLevel2, categoryLevel3,(index-1)*pageSize, pageSize);
+	}
+
+	@Override
+	public int selectBackendCount(@Param("softwareName") String softwareName,
+			@Param("STATUS") int STATUS, @Param("flatformId") int flatformId,
+			@Param("categoryLevel1") int categoryLevel1,
+			@Param("categoryLevel2") int categoryLevel2,
+			@Param("categoryLevel3") int categoryLevel3) {
+		return appInfoMapper.selectBackendCount(softwareName, STATUS, flatformId, categoryLevel1, categoryLevel2, categoryLevel3);
+	}
+
+	@Override
+	public boolean updateStatus(@Param("status") int status, @Param("id") int id) {
+		int row =  appInfoMapper.updateStatus(status, id);
+		if(row==1){
+			return true;
+		}else{
+			return false;
+		}
 	}
 
 

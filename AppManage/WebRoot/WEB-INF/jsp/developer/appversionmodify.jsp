@@ -133,7 +133,7 @@
 				<input type="hidden" id="hid_downloadLink" name="hid_downloadLink">
 			</div>
 			<div id="apkFile"></div>
-			${fileUploadError }
+			${fileUploadError}
             </div>
           </div>
           <div class="ln_solid"></div>
@@ -144,6 +144,7 @@
               
               	function a(){
               		 document.getElementById("hid_downloadLink").value  = document.getElementById("attach").value;
+              		 alert(document.getElementById("attach").value);
               		 return true;
               	}
               </script>

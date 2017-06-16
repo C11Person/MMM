@@ -57,7 +57,7 @@ public class DevUserController {
 	AppVersionService appVersionService;
 
 	// 跳转到登陆界面
-	@RequestMapping(value = "/login.html")
+	@RequestMapping(value = "/devLogin.html")
 	public String lo() {
 		return "devlogin";
 	}
@@ -224,8 +224,7 @@ public class DevUserController {
 					|| prefix.equalsIgnoreCase("png")
 					|| prefix.equalsIgnoreCase("jpeg")
 					|| prefix.equalsIgnoreCase("pneg")) {// 上传图片格式不正确
-				String fileName = System.currentTimeMillis()
-						+ RandomUtils.nextInt(1000000) + "_Personal.jpg";
+				String fileName =oldFileName;
 				logger.debug("new fileName======== " + attach.getName());
 				File targetFile = new File(path, fileName);
 				if (!targetFile.exists()) {
@@ -556,5 +555,30 @@ public class DevUserController {
 		
 		
 	}
-
+	
+	
+	@RequestMapping(value="{appId}/{saleSwitch}/sale")
+	@ResponseBody
+	public String appsaleSwitch(@PathVariable String saleSwitch,@PathVariable int appId){
+		HashMap<String, String> resutlt = new HashMap<String, String>();
+		if(saleSwitch.equals("open")){
+			int row = appInfoService.appOnSale(4,new Date(),appId);
+			if(row==1){
+				resutlt.put("errorCode", "0");
+				resutlt.put("resultMsg", "success");
+			}else{
+				resutlt.put("resultMsg", "failed");
+			}
+			
+		}else if(saleSwitch.equals("close")){
+			int row =appInfoService.appOffSale(5,new Date(),appId);
+			if(row==1){
+				resutlt.put("errorCode", "0");
+				resutlt.put("resultMsg", "success");
+			}else{
+				resutlt.put("resultMsg", "failed");
+			}
+		}
+		return JSONArray.toJSONString(resutlt);
+	}
 }
