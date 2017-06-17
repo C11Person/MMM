@@ -55,6 +55,13 @@ public class DevUserController {
 	AppCategoryService appCategoryService;
 	@Autowired
 	AppVersionService appVersionService;
+	
+	
+	//返回平台界面
+	@RequestMapping(value="/manage.html")
+	public String LL(){
+		return "manage";
+	}
 
 	// 跳转到登陆界面
 	@RequestMapping(value = "/devLogin.html")

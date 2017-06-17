@@ -33,7 +33,7 @@
         <div class="animate form login_form">
           <section class="login_content">
             <form action="${pageContext.request.contextPath }/dologin" method="post">
-              <h1>后台管理系统</h1>
+              <h1>后台管理系统</h1><a href="manage.html" class="btn btn-default">返回</a>
               <div>
                 <input type="text" class="form-control" name="userCode" placeholder="请输入用户名" required="" />
               </div>

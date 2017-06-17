@@ -33,7 +33,7 @@
         <div class="animate form login_form">
           <section class="login_content">
             <form action="${pageContext.request.contextPath }/dologin.html" method="post">
-              <h1>APP开发者平台</h1>
+              <h1>APP开发者平台</h1><a href="manage.html" class="btn btn-default">返回</a>
               <div>
                 <input type="text" class="form-control" name="devCode" placeholder="请输入用户名" required="" />
               </div>
@@ -45,6 +45,7 @@
               	<button type="submit" class="btn btn-success">登     录</button>
               	<button type="reset" class="btn btn-default">重　填</button>
               </div>
+              
 
               <div class="clearfix"></div>
 
